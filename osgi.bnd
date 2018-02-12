@@ -1,0 +1,10 @@
+Bundle-SymbolicName: ${bundle.symbolicName}
+
+Import-Package: \
+  org.slf4j.*;resolution:=optional, \
+  de.tototec.utils.functional.*;resolution:=optional, \
+  *
+
+Export-Package: \
+  ${bundle.namespace};version="0.1.0", \
+  de.tototec.utils.functional
