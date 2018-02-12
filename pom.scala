@@ -112,6 +112,7 @@ Model(
           ),
           overview = "README.adoc",
           additionalparam = s"""--base-dir "$${project.basedir}"
+            | --attributes-file src/main/doc/placeholders.adoc
             | --attribute "name=$${project.name}"
 						| --attribute "version=${dominoJavaVersion}"
 						| --attribute "dominojavaversion=${dominoJavaVersion}"
