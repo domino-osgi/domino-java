@@ -3,7 +3,7 @@
 
 ifdef::env-github[]
 image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
-// image:https://badges.gitter.im/Join%20Chat.svg["Gitter chat", link="https://gitter.im/domino-osgi/domino-java"]
+image:https://badges.gitter.im/Join%20Chat.svg["Gitter chat", link="https://gitter.im/domino-osgi/domino-java"]
 endif::[]
 
 This project is in an experimental state.
