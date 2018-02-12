@@ -23,6 +23,8 @@ read
 
 DOMINO_VERSION="0.1.0"
 
+mvn clean source:jar javadoc:jar install
+
 if [ -n "$SKIP_UPLOAD" ] ; then
   echo "Skipping Upload"
 else
