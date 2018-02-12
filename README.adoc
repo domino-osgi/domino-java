@@ -7,7 +7,7 @@ image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI
 endif::[]
 
 This project is in an experimental state.
-It tries to bring the comfort of the proven Domino Scala DSL into the Java world.
+It tries to bring the comfort of the proven https://github.com/domino-osgi/domino[Domino Scala DSL] into the Java world.
 It make most sense with Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
 
 == Download
@@ -24,9 +24,10 @@ Maven::
 </dependency>
 ----
 
-== Resources
+== Documentation
 
-*  Javadoc can also be read online: https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadoc for domino-java 0.1.0]
+* https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadoc for domino-java 0.1.0]
+* https://gitter.im/domino-osgi/domino-java[Gitter chat]
 
 == Changelog
 
