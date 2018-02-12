@@ -7,4 +7,5 @@ Import-Package: \
 
 Export-Package: \
   ${bundle.namespace};version="0.1.0", \
+  ${bundle.namespace}.capsule;version="0.1.0", \
   de.tototec.utils.functional
