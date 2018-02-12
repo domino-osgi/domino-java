@@ -1,12 +1,32 @@
 = Domino Java - A Java DSL to master OSGi dynamics
+:latest-version: 0.1.0
+
+ifdef::env-github[]
+image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
+// image:https://badges.gitter.im/Join%20Chat.svg["Gitter chat", link="https://gitter.im/domino-osgi/domino-java"]
+endif::[]
 
 This project is in an experimental state.
 It tries to bring the comfort of the proven Domino Scala DSL into the Java world.
 It make most sense with Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
 
+== Download
+
+The latest version is {latest-version} and can be downloaded from http://search.maven.org/#search|ga|1|g%3A%22com.github.domino-osgi%22[Maven Central].
+
+Maven::
+[source,xml,subs="attributes,verbatim"]
+----
+<dependency>
+  <groupId>com.github.domino-osgi</groupId>
+  <artifactId>domino-java</artifactId>
+  <version>{latest-version}</version>
+</dependency>
+----
+
 == Resources
 
-*  https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadocs for domino-java 0.1.0]
+*  Javadoc can also be read online: https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadoc for domino-java 0.1.0]
 
 == Changelog
 
