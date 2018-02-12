@@ -6,9 +6,12 @@ val dominoJavaVersion = "0.1.1-SNAPSHOT"
 val url = "https://github.com/domino-osgi/domino-java"
 
 object Deps {
-	val asciiDoclet = "org.asciidoctor" % "asciidoclet" % "1.5.4"
-	val bndlib = "biz.aQute.bnd" % "biz.aQute.bndlib" % "3.5.0"
-	val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
+  val asciiDoclet = "org.asciidoctor" % "asciidoclet" % "1.5.4"
+  val bndlib = "biz.aQute.bnd" % "biz.aQute.bndlib" % "3.5.0"
+  val felixConnect = "org.apache.felix" % "org.apache.felix.connect" % "0.1.0"
+  val junit4 = "junit" % "junit" % "4.12"
+  val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.3.0"
+  val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
   val osgiCore = "org.osgi" % "org.osgi.core" % "5.0.0"
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
   val utilsFunctional = "de.tototec" % "de.tototec.utils.functional" % "1.0.0"
@@ -63,11 +66,14 @@ Model(
     Deps.osgiCore,
     Deps.osgiCompendium,
     Dependency(Deps.slf4j, scope = "provided", optional = true),
-    Dependency(Deps.utilsFunctional, scope = "provided", optional = true)
+    Dependency(Deps.utilsFunctional, scope = "provided", optional = true),
     // test dependencies
-    // Deps.felixConfigAdmin % "test",
-    // Deps.pojosr % "test"
-    // Deps.logbackClassic % "test"
+    Deps.lambdaTest % "test",
+    Deps.felixConnect % "test",
+    Deps.junit4 % "test"
+  // Deps.felixConfigAdmin % "test",
+  // Deps.pojosr % "test"
+  // Deps.logbackClassic % "test"
   ),
   build = Build(
     resources = Seq(
@@ -99,7 +105,7 @@ Model(
         ),
         executions = Seq(Execution(phase = "verify", goals = Seq("baseline")))
       ),
-       // Use Asciidoclet processor instead of standard Javadoc
+      // Use Asciidoclet processor instead of standard Javadoc
       Plugin(
         Plugins.javadoc,
         configuration = Config(
