@@ -4,6 +4,10 @@ This project is in an experimental state.
 It tries to bring the comfort of the proven Domino Scala DSL into the Java world.
 It make most sense with Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
 
+== Resources
+
+*  https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadocs for domino-java 0.1.0]
+
 == Changelog
 
 === domino-java 0.1.0 - 2018-02-12
