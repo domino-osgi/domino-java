@@ -1,15 +1,12 @@
 package domino.java;
 
 import static de.tobiasroeser.lambdatest.Expect.expectEquals;
-import static de.tobiasroeser.lambdatest.Expect.expectFalse;
 import static de.tobiasroeser.lambdatest.Expect.expectNotEquals;
-import static de.tobiasroeser.lambdatest.Expect.expectNotNull;
 import static de.tobiasroeser.lambdatest.Expect.expectTrue;
 
 import java.util.Map;
 
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 
 import de.tobiasroeser.lambdatest.junit.FreeSpec;
 import domino.java.test.FelixConnectHelper;
