@@ -143,7 +143,15 @@ public class OsgiContext
 	 */
 	public OsgiContext() {
 	}
-
+	
+	/**
+	 * Returns `true` as long as the bundle is active and it's bundle context is
+	 * valid.
+	 */
+	public boolean isActive() {
+		return bundleContext.isDefined();
+	}
+	
 	/**
 	 * Defines a handler `f` to be executed when the bundle becomes active. `f` is
 	 * executed as soon as the bundle activator's `start` method is called. This
