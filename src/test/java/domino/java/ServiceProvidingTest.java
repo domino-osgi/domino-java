@@ -33,11 +33,11 @@ public class ServiceProvidingTest extends FreeSpec {
 
 	public ServiceProvidingTest() {
 
-		ExampleServce exampleService = new ExampleServce();
+		final ExampleServce exampleService = new ExampleServce();
 
-		CombinedService combinedService = new CombinedService();
+		final CombinedService combinedService = new CombinedService();
 
-		Map<String, Object> serviceProps = Util.asMap("prop1", "value1", "prop2", 3);
+		final Map<String, Object> serviceProps = Util.asMap("prop1", "value1", "prop2", 3);
 
 		section("Service providing", () -> {
 
@@ -50,13 +50,16 @@ public class ServiceProvidingTest extends FreeSpec {
 							});
 						}
 					}
-					Activator activator = new Activator();
+					final Activator activator = new Activator();
 					activator.start(sr.getBundleContext());
-					ServiceReference<?> ref = sr.getServiceReference(CombinedService.class.getName());
+					final ServiceReference<?> ref = sr.getServiceReference(CombinedService.class.getName());
 					expectNotEquals(ref, null);
 					expectTrue(sr.getService(ref) instanceof CombinedService);
 					expectEquals(sr.getServiceReference(MyService.class.getName()), null);
 					expectEquals(sr.getServiceReference(MyService2.class.getName()), null);
+
+					activator.stop(sr.getBundleContext());
+					expectEquals(sr.getServiceReference(CombinedService.class.getName()), null);
 				});
 			});
 
@@ -70,9 +73,9 @@ public class ServiceProvidingTest extends FreeSpec {
 							});
 						}
 					}
-					Activator activator = new Activator();
+					final Activator activator = new Activator();
 					activator.start(sr.getBundleContext());
-					ServiceReference<?> ref = sr.getServiceReference(MyService.class.getName());
+					final ServiceReference<?> ref = sr.getServiceReference(MyService.class.getName());
 					expectNotEquals(ref, null);
 					expectTrue(sr.getService(ref) instanceof MyService);
 					expectEquals(ref.getProperty("prop1"), "value1");
@@ -80,6 +83,10 @@ public class ServiceProvidingTest extends FreeSpec {
 					expectEquals(sr.getServiceReference(MyService2.class.getName()), null);
 					expectNotEquals(sr.getServiceReferences(MyService.class.getName(), "(&(prop1=value1)(prop2=3))"),
 							null);
+
+					activator.stop(sr.getBundleContext());
+					expectEquals(sr.getServiceReference(MyService.class.getName()), null);
+
 				});
 			});
 

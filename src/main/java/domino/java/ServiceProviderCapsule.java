@@ -68,8 +68,10 @@ public class ServiceProviderCapsule<S> implements Capsule {
 
 		final Hashtable<String, ?> props = new Hashtable<>(properties);
 
-		log.debug("About to provide the service: {}\n  interfaces: {}\n  properties: {}",
-				service, mkString(types, ", "), properties);
+		if (log.isDebugEnabled()) {
+			log.debug("About to provide the service: {}\n  interfaces: {}\n  properties: {}",
+					service, mkString(types, ", "), properties);
+		}
 
 		// Register service
 		@SuppressWarnings("unchecked")
@@ -81,7 +83,13 @@ public class ServiceProviderCapsule<S> implements Capsule {
 	@Override
 	public void stop() {
 		serviceRegistration.foreach(reg -> {
+
 			try {
+				if (log.isDebugEnabled()) {
+					final List<String> types = map(interfaces, i -> i.getName());
+					log.debug("Removing provided service: {}\n  interfaces: {}\n  properties: {}",
+							service, mkString(types, ", "), properties);
+				}
 				reg.unregister();
 			} catch (final IllegalStateException e) {
 				// Do nothing. Was already unregistered.
