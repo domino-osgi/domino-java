@@ -21,7 +21,7 @@ fi
 echo "Please edit staging-settings.xml with propper connection details."
 read
 
-DOMINO_VERSION="0.1.0"
+DOMINO_VERSION="0.1.1"
 URL="https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 
 mvn clean source:jar javadoc:jar install

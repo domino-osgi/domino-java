@@ -1,5 +1,5 @@
 = Domino Java - A Java DSL to master OSGi dynamics
-:latest-version: 0.1.0
+:latest-version: 0.1.1
 
 ifdef::env-github[]
 image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
@@ -30,6 +30,12 @@ Maven::
 * https://gitter.im/domino-osgi/domino-java[Gitter chat]
 
 == Changelog
+
+=== domino-java 0.1.1 - 2018-02-27
+
+* Added `OsgiContext.isActive` method
+* Log un-registrations of services
+* Created test suite based on Felix Connect (aka PojoSR)
 
 === domino-java 0.1.0 - 2018-02-12
 
