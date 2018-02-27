@@ -26,7 +26,7 @@ Maven::
 
 == Documentation
 
-* https://domino-osgi.github.io/domino-java/javadoc/0.1.0/[Javadoc for domino-java 0.1.0]
+* https://domino-osgi.github.io/domino-java/javadoc/0.1.x/[Javadoc for domino-java 0.1.x]
 * https://gitter.im/domino-osgi/domino-java[Gitter chat]
 
 == Changelog
