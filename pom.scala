@@ -16,8 +16,7 @@ object Deps {
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
   val utilsFunctional = "de.tototec" % "de.tototec.utils.functional" % "1.0.0"
   // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"
-  // val pojosr = "com.googlecode.pojosr" % "de.kalpatec.pojosr.framework.bare" % "0.2.1"
-  // val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.3"
+  val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.3"
 }
 
 object Plugins {
@@ -70,10 +69,10 @@ Model(
     // test dependencies
     Deps.lambdaTest % "test",
     Deps.felixConnect % "test",
-    Deps.junit4 % "test"
+    Deps.junit4 % "test",
   // Deps.felixConfigAdmin % "test",
   // Deps.pojosr % "test"
-  // Deps.logbackClassic % "test"
+   Deps.logbackClassic % "test"
   ),
   build = Build(
     resources = Seq(
