@@ -177,7 +177,7 @@ public class OsgiContext
 			// TODO: log the caller here
 			log.warn("Overriding already present whenBundleActive. The previous whenBundleActive will be ignored");
 		}
-		bundleActiveHandler = Optional.lift(f);
+		bundleActiveHandler = Optional.of(f);
 
 		// check if we were already started and apply the handler now
 		if (firstSet && bundleContext.isDefined()) {
@@ -193,7 +193,7 @@ public class OsgiContext
 		}
 
 		// Make bundle context available in this class
-		bundleContext = Optional.lift(context);
+		bundleContext = Optional.of(context);
 
 		internalStart();
 	}
@@ -509,7 +509,7 @@ public class OsgiContext
 					"Cannot get service reference. This API method must be called with an valid bundle context.");
 		}
 		final ServiceReference<?> ref = bundleContext.get().getServiceReference(type.getName());
-		return Optional.lift(ref).map(r -> {
+		return Optional.of(ref).map(r -> {
 			@SuppressWarnings("unchecked")
 			final ServiceReference<S> s = (ServiceReference<S>) r;
 			return s;

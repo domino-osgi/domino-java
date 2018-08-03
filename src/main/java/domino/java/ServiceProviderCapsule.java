@@ -77,7 +77,7 @@ public class ServiceProviderCapsule<S> implements Capsule {
 		@SuppressWarnings("unchecked")
 		final ServiceRegistration<S> serviceRegistration = (ServiceRegistration<S>) bundleContext
 				.registerService(types.toArray(new String[types.size()]), service, props);
-		this.serviceRegistration = Optional.lift(serviceRegistration);
+		this.serviceRegistration = Optional.of(serviceRegistration);
 	}
 
 	@Override
