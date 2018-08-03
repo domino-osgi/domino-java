@@ -10,7 +10,7 @@ object Deps {
   val bndlib = "biz.aQute.bnd" % "biz.aQute.bndlib" % "3.5.0"
   val felixConnect = "org.apache.felix" % "org.apache.felix.connect" % "0.1.0"
   val junit4 = "junit" % "junit" % "4.12"
-  val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.3.0"
+  val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.6.2"
   val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
   val osgiCore = "org.osgi" % "org.osgi.core" % "5.0.0"
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
@@ -21,7 +21,7 @@ object Deps {
 
 object Plugins {
   val bnd = "biz.aQute.bnd" % "bnd-maven-plugin" % "3.5.0"
-  val bundle = "org.apache.felix" % "maven-bundle-plugin" % "3.3.0"
+  val bundle = "org.apache.felix" % "maven-bundle-plugin" % "3.5.0"
   val clean = "org.apache.maven.plugins" % "maven-clean-plugin" % "3.0.0"
   val gpg = "org.apache.maven.plugins" % "maven-gpg-plugin" % "1.6"
   val jar = "org.apache.maven.plugins" % "maven-jar-plugin" % "2.5"
@@ -102,7 +102,15 @@ Model(
             _include = "osgi.bnd"
           )
         ),
-        executions = Seq(Execution(phase = "verify", goals = Seq("baseline")))
+        executions = Seq(
+          Execution(
+            phase = "verify",
+            goals = Seq("baseline"),
+            configuration = Config(
+              failOnError = "false"
+            )
+          )
+        )
       ),
       // Use Asciidoclet processor instead of standard Javadoc
       Plugin(
