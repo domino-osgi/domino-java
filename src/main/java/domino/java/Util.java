@@ -23,7 +23,7 @@ public interface Util {
 		final String objectClassFilter = createObjectClassFilter(className);
 
 		// Combine
-		return linkFiltersWithAnd(Optional.some(objectClassFilter), Optional.lift(customFilter)).get();
+		return linkFiltersWithAnd(Optional.some(objectClassFilter), Optional.of(customFilter)).get();
 	}
 
 	/**
@@ -63,8 +63,8 @@ public interface Util {
 	 * 
 	 * @return The created Map.
 	 */
-	public static <K, V> LinkedHashMap<K, V> asMap(K key1, V value1) {
-		LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
+	public static <K, V> LinkedHashMap<K, V> asMap(final K key1, final V value1) {
+		final LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
 		linkedHashMap.put(key1, value1);
 		return linkedHashMap;
 	}
@@ -75,8 +75,8 @@ public interface Util {
 	 * 
 	 * @return The created Map.
 	 */
-	public static <K, V> LinkedHashMap<K, V> asMap(K key1, V value1, K key2, V value2) {
-		LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
+	public static <K, V> LinkedHashMap<K, V> asMap(final K key1, final V value1, final K key2, final V value2) {
+		final LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
 		linkedHashMap.put(key1, value1);
 		linkedHashMap.put(key2, value2);
 		return linkedHashMap;
@@ -89,10 +89,10 @@ public interface Util {
 	 * @return The created Map.
 	 */
 	public static <K, V> LinkedHashMap<K, V> asMap(
-			K key1, V value1,
-			K key2, V value2,
-			K key3, V value3) {
-		LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
+			final K key1, final V value1,
+			final K key2, final V value2,
+			final K key3, final V value3) {
+		final LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
 		linkedHashMap.put(key1, value1);
 		linkedHashMap.put(key2, value2);
 		linkedHashMap.put(key3, value3);
@@ -106,11 +106,11 @@ public interface Util {
 	 * @return The created Map.
 	 */
 	public static <K, V> LinkedHashMap<K, V> asMap(
-			K key1, V value1,
-			K key2, V value2,
-			K key3, V value3,
-			K key4, V value4) {
-		LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
+			final K key1, final V value1,
+			final K key2, final V value2,
+			final K key3, final V value3,
+			final K key4, final V value4) {
+		final LinkedHashMap<K, V> linkedHashMap = new LinkedHashMap<>();
 		linkedHashMap.put(key1, value1);
 		linkedHashMap.put(key2, value2);
 		linkedHashMap.put(key3, value3);
