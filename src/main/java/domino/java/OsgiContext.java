@@ -33,13 +33,13 @@ import domino.java.internal.LoggerFactory;
 /**
  * This is the main entry point to the Domino Java DSL.
  *
- * By having your bundle activator extend from this class, you get *full*
- * access to the Domino Java DSL.
+ * By having your bundle activator extend from this class, you get *full* access
+ * to the Domino Java DSL.
  * 
  * By calling {@link #whenBundleActive(Procedure1)}, you implicitly create a
- * {@link Capsule} which is tighly coupled to the bundles actived state.
- * All (most) other methods of this class should be called inside this capsule
- * (in the given procedure).
+ * {@link Capsule} which is tighly coupled to the bundles actived state. All
+ * (most) other methods of this class should be called inside this capsule (in
+ * the given procedure).
  * 
  * Note that if you use
  * {@link #watchAdvancedServices(Class, String, Procedure1)}, you might
@@ -72,7 +72,7 @@ import domino.java.internal.LoggerFactory;
  * import domino.java.OsgiContext
  * import org.osgi.service.http.HttpService
  *
- * public class Activator extends DominoActivator {
+ * public class Activator extends OsgiContext {
  * 
  * public Activator() {
  * 
@@ -94,6 +94,7 @@ import domino.java.internal.LoggerFactory;
  * == Example 2: Listen for configuration changes
  *
  * [source,scala]
+ * ----
  * package org.example.domino_test_two
  * 
  * import domino.DominoActivator
@@ -139,12 +140,13 @@ public class OsgiContext
 	/**
 	 * Will be called by the OSGi framework, if you inherit from this class.
 	 * 
-	 * If you construct this class manually, you have to take care to properly call
-	 * the {@link #start(BundleContext)} and {@link #stop(BundleContext)} methods.
+	 * If you construct this class manually, you have to take care to properly
+	 * call the {@link #start(BundleContext)} and {@link #stop(BundleContext)}
+	 * methods.
 	 */
 	public OsgiContext() {
 	}
-	
+
 	/**
 	 * Returns `true` as long as the bundle is active and it's bundle context is
 	 * valid.
@@ -152,18 +154,18 @@ public class OsgiContext
 	public boolean isActive() {
 		return bundleContext.isDefined();
 	}
-	
+
 	/**
-	 * Defines a handler `f` to be executed when the bundle becomes active. `f` is
-	 * executed as soon as the bundle activator's `start` method is called. This
-	 * should be called in the constructor of your activator.
+	 * Defines a handler `f` to be executed when the bundle becomes active. `f`
+	 * is executed as soon as the bundle activator's `start` method is called.
+	 * This should be called in the constructor of your activator.
 	 *
-	 * In `f`, you have the opportunity to add so called capsules, which have their
-	 * own `start` and `stop` methods (a kind of mini bundles). Their `stop` methods
-	 * will be invoked as soon as the bundle activator's `stop` method is called. So
-	 * you have the big chance here to encapsulate start and stop logic at one
-	 * place, making the bundle activator less error-prone, better readable and
-	 * easier to write.
+	 * In `f`, you have the opportunity to add so called capsules, which have
+	 * their own `start` and `stop` methods (a kind of mini bundles). Their
+	 * `stop` methods will be invoked as soon as the bundle activator's `stop`
+	 * method is called. So you have the big chance here to encapsulate start
+	 * and stop logic at one place, making the bundle activator less
+	 * error-prone, better readable and easier to write.
 	 *
 	 * @param f
 	 *            Handler
@@ -295,7 +297,7 @@ public class OsgiContext
 	@Override
 	public <S> ServiceRegistration<S> providesService(final S service) {
 		@SuppressWarnings("unchecked")
-		List<Class<? super S>> types = Arrays.asList((Class<? super S>) service.getClass());
+		final List<Class<? super S>> types = Arrays.asList((Class<? super S>) service.getClass());
 		return internalProvideService(service, types, Collections.emptyMap());
 	}
 
@@ -325,7 +327,7 @@ public class OsgiContext
 	@Override
 	public <S> ServiceRegistration<S> providesService(final S service, final Map<String, Object> properties) {
 		@SuppressWarnings("unchecked")
-		List<Class<? super S>> types = Arrays.asList((Class<? super S>) service.getClass());
+		final List<Class<? super S>> types = Arrays.asList((Class<? super S>) service.getClass());
 		return internalProvideService(service, types, properties);
 	}
 

@@ -14,9 +14,14 @@ import de.tototec.utils.functional.Procedure4;
 public interface ServiceWatching {
 
 	/**
-	 * Lets you react to service events for services with the specified type which
-	 * match the given filter.
+	 * Lets you react to service events for services with the specified type
+	 * which match the given filter.
 	 *
+	 * @param type
+	 *            The `Class` representing the service type.
+	 * @param filer
+	 *            A filter criteria expression (LDAP-style filter) to further
+	 *            specify the service, or `null`.
 	 * @param f
 	 *            Service event handler
 	 * @tparam S Service type
@@ -26,17 +31,24 @@ public interface ServiceWatching {
 
 	/**
 	 * Activates the given inner logic as long as the first service of the given
-	 * type is present. This implements the concept of required services. The inner
-	 * logic is started as soon as a service s of the given type gets present and
-	 * stopped when s is removed.
+	 * type is present. This implements the concept of required services. The
+	 * inner logic is started as soon as a service s of the given type gets
+	 * present and stopped when s is removed.
+	 * 
+	 * @param type
+	 *            The `Class` representing the service type.
+	 * @param filer
+	 *            A filter criteria expression (LDAP-style filter) to further
+	 *            specify the service, or `null`.
+	 * @tparam S Service type
 	 */
 	<S> ServiceTracker<S, S> whenAdvancedServicePresent(Class<S> type, String filter, Procedure1<S> f);
 
 	/**
 	 * Waits until a service of the specified type is available and executes the
-	 * given event handler with it. When the service disappears, the capsules added
-	 * in the handlers are stopped. You can wait on a bunch of services if you nest
-	 * `whenServicePresent` methods.
+	 * given event handler with it. When the service disappears, the capsules
+	 * added in the handlers are stopped. You can wait on a bunch of services if
+	 * you nest `whenServicePresent` methods.
 	 *
 	 * @param f
 	 *            Handler
