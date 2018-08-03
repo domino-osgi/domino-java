@@ -5,6 +5,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import de.tototec.utils.functional.Procedure1;
 import de.tototec.utils.functional.Procedure2;
 import de.tototec.utils.functional.Procedure3;
+import de.tototec.utils.functional.Procedure4;
 
 /**
  * Provides convenient methods to add a service watcher to the current scope or
@@ -52,11 +53,10 @@ public interface ServiceWatching {
 			Class<S3> type3,
 			Procedure3<S1, S2, S3> f);
 
-	// FIXME re-incomment when procedure 4 becomes available
-	// <S1, S2, S3, S4> ServiceTracker<S1, S1> whenServicesPresent(
-	// final Class<S1> type1,
-	// final Class<S2> type2,
-	// final Class<S3> type3,
-	// final Class<S4> type4,
-	// final Procedure4<S1, S2, S3, S4> f);
+	<S1, S2, S3, S4> ServiceTracker<S1, S1> whenServicesPresent(
+			final Class<S1> type1,
+			final Class<S2> type2,
+			final Class<S3> type3,
+			final Class<S4> type4,
+			final Procedure4<S1, S2, S3, S4> f);
 }

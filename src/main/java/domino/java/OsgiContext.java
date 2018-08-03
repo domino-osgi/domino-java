@@ -23,6 +23,7 @@ import de.tototec.utils.functional.Optional;
 import de.tototec.utils.functional.Procedure1;
 import de.tototec.utils.functional.Procedure2;
 import de.tototec.utils.functional.Procedure3;
+import de.tototec.utils.functional.Procedure4;
 import domino.java.capsule.Capsule;
 import domino.java.capsule.CapsuleScope;
 import domino.java.capsule.DynamicCapsuleContext;
@@ -463,20 +464,19 @@ public class OsgiContext
 		});
 	}
 
-	// FIXME re-incomment when procedure 4 becomes available
-	// public <S1, S2, S3, S4> ServiceTracker<S1, S1> whenServicesPresent(
-	// final Class<S1> type1,
-	// final Class<S2> type2,
-	// final Class<S3> type3,
-	// final Class<S4> type4,
-	// final Procedure4<S1, S2, S3, S4> f) {
-	// return whenServicesPresent(type1, type2, type3, (final S1 s1, final S2 s2,
-	// final S3 s3) -> {
-	// whenServicePresent(type4, (final S4 s4) -> {
-	// f.apply(s1, s2, s3, s4);
-	// });
-	// });
-	// }
+	public <S1, S2, S3, S4> ServiceTracker<S1, S1> whenServicesPresent(
+			final Class<S1> type1,
+			final Class<S2> type2,
+			final Class<S3> type3,
+			final Class<S4> type4,
+			final Procedure4<S1, S2, S3, S4> f) {
+		return whenServicesPresent(type1, type2, type3, (final S1 s1, final S2 s2,
+				final S3 s3) -> {
+			whenServicePresent(type4, (final S4 s4) -> {
+				f.apply(s1, s2, s3, s4);
+			});
+		});
+	}
 
 	/////////////////////////////////
 	// Service Consuming
