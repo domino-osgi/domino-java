@@ -2,7 +2,7 @@ import org.sonatype.maven.polyglot.scala.model._
 import scala.collection.immutable._
 
 val dominoJavaName = "domino.java"
-val dominoJavaVersion = "0.1.1"
+val dominoJavaVersion = "0.2.0-SNAPSHOT"
 val url = "https://github.com/domino-osgi/domino-java"
 
 object Deps {
