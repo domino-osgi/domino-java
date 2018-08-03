@@ -1,5 +1,5 @@
 = Domino Java - A Java DSL to master OSGi dynamics
-:latest-version: 0.1.1
+:latest-version: 0.2.0
 
 ifdef::env-github[]
 image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
@@ -26,10 +26,17 @@ Maven::
 
 == Documentation
 
+* https://domino-osgi.github.io/domino-java/javadoc/current[Javadoc for latest domino-java version]
 * https://domino-osgi.github.io/domino-java/javadoc/0.1.x/[Javadoc for domino-java 0.1.x]
 * https://gitter.im/domino-osgi/domino-java[Gitter chat]
 
 == Changelog
+
+=== domino-java 0.2.0 - 2018-08-03
+
+* Added `ServiceWatching.whenServicePresent` with 4 types
+* Updated major version of dependency de.tototec.utils.functional
+* No longer re-export de.tototec.utils.functional
 
 === domino-java 0.1.1 - 2018-02-27
 
