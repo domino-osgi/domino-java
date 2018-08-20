@@ -69,8 +69,8 @@ public class ServiceProviderCapsule<S> implements Capsule {
 		final Hashtable<String, ?> props = new Hashtable<>(properties);
 
 		if (log.isDebugEnabled()) {
-			log.debug("About to provide the service: {}\n  interfaces: {}\n  properties: {}",
-					service, mkString(types, ", "), properties);
+			log.debug("Bundle {}: Register service [${service}] with interfaces [{}} and properties [{}]",
+					Util.bundleName(bundleContext), service, mkString(types, ", "), properties);
 		}
 
 		// Register service
@@ -87,8 +87,8 @@ public class ServiceProviderCapsule<S> implements Capsule {
 			try {
 				if (log.isDebugEnabled()) {
 					final List<String> types = map(interfaces, i -> i.getName());
-					log.debug("Removing provided service: {}\n  interfaces: {}\n  properties: {}",
-							service, mkString(types, ", "), properties);
+					log.debug("Bundle {}: Unregister service: [{}] with interfaces [{}] and properties [{}]",
+							Util.bundleName(bundleContext), service, mkString(types, ", "), properties);
 				}
 				reg.unregister();
 			} catch (final IllegalStateException e) {

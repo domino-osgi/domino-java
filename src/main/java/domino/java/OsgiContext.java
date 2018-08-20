@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -47,10 +46,7 @@ import domino.java.internal.LoggerFactory;
  *
  * == Example 1: Wait for a service
  * 
- * .MyService.java
- * [source,java]
- * ----
- * package org.example.domino_test_one
+ * .MyService.java [source,java] ---- package org.example.domino_test_one
  * 
  * import org.osgi.service.http.HttpService
  *
@@ -58,60 +54,42 @@ import domino.java.internal.LoggerFactory;
  * 
  * private final HttpService httpService;
  * 
- * public MyService(HttpService httpService) {
- * this.httpService = httpService;
- * }
- * }
- * ----
+ * public MyService(HttpService httpService) { this.httpService = httpService; }
+ * } ----
  * 
- * .Activator.java
- * [source,java]
- * ----
- * package org.example.domino_test_one
+ * .Activator.java [source,java] ---- package org.example.domino_test_one
  * 
- * import domino.java.OsgiContext
- * import org.osgi.service.http.HttpService
+ * import domino.java.OsgiContext import org.osgi.service.http.HttpService
  *
  * public class Activator extends OsgiContext {
  * 
  * public Activator() {
  * 
- * whenBundleActive(bundleContext -> {
- * // Make MyService available as long as HttpService is present
- * whenServicePresent(HttpService.class, httpService -> {
- * MyService myService = new MyService(httpService);
- * providesService(myService, MyService.class);
- * });
+ * whenBundleActive(bundleContext -> { // Make MyService available as long as
+ * HttpService is present whenServicePresent(HttpService.class, httpService -> {
+ * MyService myService = new MyService(httpService); providesService(myService,
+ * MyService.class); });
  * 
  * });
  * 
  * }
  * 
- * }
- * ----
+ * } ----
  *
- * FIXME: THis is not yet possible
- * == Example 2: Listen for configuration changes
+ * FIXME: THis is not yet possible == Example 2: Listen for configuration
+ * changes
  *
- * [source,scala]
- * ----
- * package org.example.domino_test_two
+ * [source,scala] ---- package org.example.domino_test_two
  * 
  * import domino.DominoActivator
  *
  * class KeyService(key: String)
  *
- * class Activator extends DominoActivator {
- * whenBundleActive {
- * // Reregister KeyService whenever configuration changes
- * whenConfigurationActive("my_service") { conf =>
- * val key = conf.get("key") map { _.asInstanceOf[String] } getOrElse
- * "defaultKey"
- * new KeyService(key).providesService[KeyService]
- * }
- * }
- * }
- * ----
+ * class Activator extends DominoActivator { whenBundleActive { // Reregister
+ * KeyService whenever configuration changes
+ * whenConfigurationActive("my_service") { conf => val key = conf.get("key") map
+ * { _.asInstanceOf[String] } getOrElse "defaultKey" new
+ * KeyService(key).providesService[KeyService] } } } ----
  * 
  * TODO: Do not allow per default multiple calls to
  * {@link #whenBundleActive(Procedure1)}, and introduce a new setter to allow
@@ -192,7 +170,7 @@ public class OsgiContext
 	public void start(final BundleContext context) {
 		if (bundleContext.isDefined()) {
 			log.error("A BundleContext is already defined. Was the bundle started before? Bundle: {}",
-					dumpBundle(context));
+					Util.bundleName(context));
 		}
 
 		// Make bundle context available in this class
@@ -205,22 +183,27 @@ public class OsgiContext
 		bundleContext.foreach(bc -> {
 			if (bundleActiveCapsuleScope.isDefined()) {
 				log.error("A bundleActiveCapsuleScope is already defined. Was the bundle started before? Bundle: {}",
-						dumpBundle(bc));
+						Util.bundleName(bc));
 			}
 
 			// Execute the handler if one was defined
 			bundleActiveHandler.foreach(f -> {
-				log.debug("Starting whenBundleActive of bundle: {}", dumpBundle(bc));
+				log.debug("Bundle {}: Starting whenBundleActive", Util.bundleName(bc));
 				// Executes f. All capsules added in f are added to a new
 				// capsule
 				// scope which is returned afterwards.
 				try {
 					bundleActiveCapsuleScope = Optional.some(executeWithinNewCapsuleScope(() -> f.apply(bc)));
 				} catch (final Throwable e) {
-					log.debug("Exception caught while starting whenBundleActive of bundle: {}", dumpBundle(bc), e);
+					log.debug("Bundle {}: Exception thrown while starting whenBundleActive", Util.bundleName(bc), e);
 					throw e;
 				}
 			});
+			if (bundleActiveHandler.isEmpty()) {
+				log.warn(
+						"Bundle {}: Starting a OsgiContext (Activator) without any registered whenBundleActive handler",
+						Util.bundleName(bc));
+			}
 		});
 	}
 
@@ -230,10 +213,11 @@ public class OsgiContext
 		try {
 			bundleActiveCapsuleScope.foreach(scope -> {
 				try {
-					log.debug("Stopping whenBundleActive of bundle: {}", dumpBundle(context));
+					log.debug("Bundle {}: Stopping whenBundleActive of bundle: {}", Util.bundleName(context));
 					scope.stop();
 				} catch (final Throwable e) {
-					log.debug("Exception caught while stopping whenBundleActive of bundle: {}", dumpBundle(context), e);
+					log.debug("Bundle {}: Exception thrown while stopping whenBundleActive", Util.bundleName(context),
+							e);
 					throw e;
 				} finally {
 					bundleActiveCapsuleScope = Optional.none();
@@ -270,11 +254,6 @@ public class OsgiContext
 
 		// Add the capsule to the current scope
 		addCapsule(capsule);
-	}
-
-	public String dumpBundle(final BundleContext context) {
-		final Bundle bundle = context.getBundle();
-		return bundle.getSymbolicName() + "[" + bundle.getBundleId() + "]";
 	}
 
 	protected <S> ServiceRegistration<S> internalProvideService(final S service,

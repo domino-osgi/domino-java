@@ -2,6 +2,8 @@ package domino.java;
 
 import java.util.LinkedHashMap;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 
 import de.tototec.utils.functional.Optional;
@@ -9,9 +11,9 @@ import de.tototec.utils.functional.Optional;
 public interface Util {
 
 	/**
-	 * Creates a filter criteria expression which matches the given main type and
-	 * the given custom filter. Thus, it includes the main `OBJECTCLASS` filter
-	 * criteria.
+	 * Creates a filter criteria expression which matches the given main type
+	 * and the given custom filter. Thus, it includes the main `OBJECTCLASS`
+	 * filter criteria.
 	 *
 	 * @param tpe
 	 *            Type information
@@ -34,8 +36,8 @@ public interface Util {
 	}
 
 	/**
-	 * Links to filter expressions with a logical AND if both are given, otherwise
-	 * returns just one of it.
+	 * Links to filter expressions with a logical AND if both are given,
+	 * otherwise returns just one of it.
 	 *
 	 * @param filterOne
 	 *            First filter
@@ -117,4 +119,17 @@ public interface Util {
 		linkedHashMap.put(key4, value4);
 		return linkedHashMap;
 	}
+
+	/**
+	 * Extract the bundle name and it's ID from the bundle context.
+	 * 
+	 * @param context
+	 *            The bundle context.
+	 * @return The formatted name.
+	 */
+	public static String bundleName(final BundleContext context) {
+		final Bundle bundle = context.getBundle();
+		return bundle.getSymbolicName() + "[" + bundle.getBundleId() + "]";
+	}
+
 }

@@ -28,7 +28,7 @@ import domino.java.internal.LoggerFactory;
 public class ServiceWatcherCapsule<S> implements Capsule {
 
 	private final Logger log = LoggerFactory.getLogger(ServiceWatcherCapsule.class);
-	
+
 	private final Filter filter;
 	private final Procedure1<ServiceWatcherEvent<S>> f;
 	private final BundleContext bundleContext;
@@ -47,15 +47,22 @@ public class ServiceWatcherCapsule<S> implements Capsule {
 	public Optional<ServiceTracker<S, S>> tracker() {
 		return tracker;
 	}
-	
+
 	@Override
 	public void start() {
-		log.debug("About to create service tracker with filter: {}", filter);
+		if (log.isDebugEnabled()) {
+			log.debug("Bundle {}: Start tracking services with filter [{}]", Util.bundleName(bundleContext), filter);
+		}
+
 		// Create tracker matching this filter
 		final ServiceTracker<S, S> t = new ServiceTracker<S, S>(bundleContext, filter, null) {
 			@Override
 			public S addingService(final ServiceReference<S> reference) {
 				final S service = context.getService(reference);
+				if (log.isDebugEnabled()) {
+					log.debug("Bundle {}: Adding service [{}] for filter [{}]", Util.bundleName(bundleContext), service,
+							filter);
+				}
 				final ServiceWatcherEvent<S> event = new ServiceWatcherEvent<S>(
 						service,
 						new ServiceWatcherContext<>(tracker().orNull(), reference),
@@ -66,6 +73,10 @@ public class ServiceWatcherCapsule<S> implements Capsule {
 
 			@Override
 			public void modifiedService(final ServiceReference<S> reference, final S service) {
+				if (log.isDebugEnabled()) {
+					log.debug("Bundle {}: Modified service [{}] for filter [{}]", Util.bundleName(bundleContext),
+							service, filter);
+				}
 				final ServiceWatcherEvent<S> event = new ServiceWatcherEvent<S>(
 						service,
 						new ServiceWatcherContext<>(tracker().orNull(), reference),
@@ -75,6 +86,10 @@ public class ServiceWatcherCapsule<S> implements Capsule {
 
 			@Override
 			public void removedService(final ServiceReference<S> reference, final S service) {
+				if (log.isDebugEnabled()) {
+					log.debug("Bundle {}: Removed service [{}] for filter [{}]", Util.bundleName(bundleContext),
+							service, filter);
+				}
 				final ServiceWatcherEvent<S> event = new ServiceWatcherEvent<S>(
 						service,
 						new ServiceWatcherContext<>(tracker().orNull(), reference),
@@ -92,6 +107,9 @@ public class ServiceWatcherCapsule<S> implements Capsule {
 
 	@Override
 	public void stop() {
+		if (log.isDebugEnabled()) {
+			log.debug("Bundle {}: Stop tracking services with filter [{}]", Util.bundleName(bundleContext), filter);
+		}
 		tracker.foreach(t -> {
 			t.close();
 			tracker = Optional.none();
