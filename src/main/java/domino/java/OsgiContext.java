@@ -46,7 +46,10 @@ import domino.java.internal.LoggerFactory;
  *
  * == Example 1: Wait for a service
  * 
- * .MyService.java [source,java] ---- package org.example.domino_test_one
+ * .MyService.java
+ * [source,java]
+ * ----
+ * package org.example.domino_test_one
  * 
  * import org.osgi.service.http.HttpService
  *
@@ -54,42 +57,60 @@ import domino.java.internal.LoggerFactory;
  * 
  * private final HttpService httpService;
  * 
- * public MyService(HttpService httpService) { this.httpService = httpService; }
- * } ----
+ * public MyService(HttpService httpService) {
+ * this.httpService = httpService;
+ * }
+ * }
+ * ----
  * 
- * .Activator.java [source,java] ---- package org.example.domino_test_one
+ * .Activator.java
+ * [source,java]
+ * ----
+ * package org.example.domino_test_one
  * 
- * import domino.java.OsgiContext import org.osgi.service.http.HttpService
+ * import domino.java.OsgiContext
+ * import org.osgi.service.http.HttpService
  *
  * public class Activator extends OsgiContext {
  * 
  * public Activator() {
  * 
- * whenBundleActive(bundleContext -> { // Make MyService available as long as
- * HttpService is present whenServicePresent(HttpService.class, httpService -> {
- * MyService myService = new MyService(httpService); providesService(myService,
- * MyService.class); });
+ * whenBundleActive(bundleContext -> {
+ * // Make MyService available as long as HttpService is present
+ * whenServicePresent(HttpService.class, httpService -> {
+ * MyService myService = new MyService(httpService);
+ * providesService(myService, MyService.class);
+ * });
  * 
  * });
  * 
  * }
  * 
- * } ----
+ * }
+ * ----
  *
- * FIXME: THis is not yet possible == Example 2: Listen for configuration
- * changes
+ * FIXME: THis is not yet possible
+ * == Example 2: Listen for configuration changes
  *
- * [source,scala] ---- package org.example.domino_test_two
+ * [source,scala]
+ * ----
+ * package org.example.domino_test_two
  * 
  * import domino.DominoActivator
  *
  * class KeyService(key: String)
  *
- * class Activator extends DominoActivator { whenBundleActive { // Reregister
- * KeyService whenever configuration changes
- * whenConfigurationActive("my_service") { conf => val key = conf.get("key") map
- * { _.asInstanceOf[String] } getOrElse "defaultKey" new
- * KeyService(key).providesService[KeyService] } } } ----
+ * class Activator extends DominoActivator {
+ * whenBundleActive {
+ * // Reregister KeyService whenever configuration changes
+ * whenConfigurationActive("my_service") { conf =>
+ * val key = conf.get("key") map { _.asInstanceOf[String] } getOrElse
+ * "defaultKey"
+ * new KeyService(key).providesService[KeyService]
+ * }
+ * }
+ * }
+ * ----
  * 
  * TODO: Do not allow per default multiple calls to
  * {@link #whenBundleActive(Procedure1)}, and introduce a new setter to allow
