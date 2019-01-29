@@ -32,6 +32,10 @@ Maven::
 
 == Changelog
 
+=== domino-java {master}
+
+* Support multipe `OsgiContext.whenBundleActive` calls
+
 === domino-java 0.2.0 - 2018-08-03
 
 * Added `ServiceWatching.whenServicePresent` with 4 types
