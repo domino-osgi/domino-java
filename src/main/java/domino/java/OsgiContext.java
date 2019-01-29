@@ -1,11 +1,15 @@
 package domino.java;
 
+import static de.tototec.utils.functional.FList.append;
+import static de.tototec.utils.functional.FList.filter;
+import static de.tototec.utils.functional.FList.foreach;
 import static de.tototec.utils.functional.FList.headOption;
 import static de.tototec.utils.functional.FList.map;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -121,20 +125,38 @@ public class OsgiContext
 		extends DynamicCapsuleContext
 		implements BundleActivator, ServiceWatching, ServiceProviding, ServiceConsuming {
 
+	private static class ActiveHandler {
+		private final Procedure1<BundleContext> start;
+		private volatile boolean started;
+
+		public ActiveHandler(final Procedure1<BundleContext> handler) {
+			this.start = handler;
+			this.started = false;
+		}
+
+		public boolean isStarted() {
+			return started;
+		}
+
+		public void setStarted() {
+			this.started = true;
+		}
+	}
+
 	private final Logger log = LoggerFactory.getLogger(OsgiContext.class);
 
 	/**
 	 * Contains the handler that {@link #whenBundleActive(Procedure1)} has been
 	 * called with.
 	 */
-	private Optional<Procedure1<BundleContext>> bundleActiveHandler = Optional.none();
+	private List<ActiveHandler> bundleActiveHandler = new LinkedList<>();
 
 	/**
 	 * Contains the bundle context as long as the bundle is active.
 	 */
 	private Optional<BundleContext> bundleContext = Optional.none();
 
-	private Optional<CapsuleScope> bundleActiveCapsuleScope = Optional.none();
+	private List<CapsuleScope> bundleActiveCapsuleScope = new LinkedList<>();
 
 	/**
 	 * Will be called by the OSGi framework, if you inherit from this class.
@@ -171,18 +193,16 @@ public class OsgiContext
 	 */
 	public void whenBundleActive(final Procedure1<BundleContext> f) {
 		// TODO log the caller here
-		log.debug("Registering whenBundleActive");
-
-		final boolean firstSet = bundleActiveHandler.isEmpty();
-
-		if (bundleActiveHandler.isDefined()) {
-			// TODO: log the caller here
-			log.warn("Overriding already present whenBundleActive. The previous whenBundleActive will be ignored");
+		if (bundleActiveHandler.isEmpty()) {
+			log.debug("Registering whenBundleActive");
+		} else {
+			log.debug("Registering additional wheBundleActive ({})", bundleActiveHandler.size() + 1);
 		}
-		bundleActiveHandler = Optional.of(f);
+
+		bundleActiveHandler.add(new ActiveHandler(f));
 
 		// check if we were already started and apply the handler now
-		if (firstSet && bundleContext.isDefined()) {
+		if (bundleContext.isDefined()) {
 			internalStart();
 		}
 	}
@@ -190,8 +210,9 @@ public class OsgiContext
 	@Override
 	public void start(final BundleContext context) {
 		if (bundleContext.isDefined()) {
-			log.error("A BundleContext is already defined. Was the bundle started before? Bundle: {}",
+			log.error("A BundleContext is already defined. The OsgiContext / bundle was started before? Bundle [{}]. Ignoring start request!",
 					Util.bundleName(context));
+			return;
 		}
 
 		// Make bundle context available in this class
@@ -202,22 +223,22 @@ public class OsgiContext
 
 	private void internalStart() {
 		bundleContext.foreach(bc -> {
-			if (bundleActiveCapsuleScope.isDefined()) {
-				log.error("A bundleActiveCapsuleScope is already defined. Was the bundle started before? Bundle: {}",
-						Util.bundleName(bc));
-			}
-
 			// Execute the handler if one was defined
-			bundleActiveHandler.foreach(f -> {
-				log.debug("Bundle {}: Starting whenBundleActive", Util.bundleName(bc));
-				// Executes f. All capsules added in f are added to a new
-				// capsule
-				// scope which is returned afterwards.
-				try {
-					bundleActiveCapsuleScope = Optional.some(executeWithinNewCapsuleScope(() -> f.apply(bc)));
-				} catch (final Throwable e) {
-					log.debug("Bundle {}: Exception thrown while starting whenBundleActive", Util.bundleName(bc), e);
-					throw e;
+			foreach(bundleActiveHandler, handler -> {
+				if (!handler.isStarted()) {
+					handler.setStarted();
+					log.debug("Bundle {}: Starting whenBundleActive", Util.bundleName(bc));
+					// Executes f. All capsules added in f are added to a new
+					// capsule
+					// scope which is returned afterwards.
+					try {
+						bundleActiveCapsuleScope = append(bundleActiveCapsuleScope,
+								executeWithinNewCapsuleScope(() -> handler.start.apply(bc)));
+					} catch (final Throwable e) {
+						log.debug("Bundle {}: Exception thrown while starting whenBundleActive", Util.bundleName(bc),
+								e);
+						throw e;
+					}
 				}
 			});
 			if (bundleActiveHandler.isEmpty()) {
@@ -232,7 +253,7 @@ public class OsgiContext
 	public void stop(final BundleContext context) throws Exception {
 		// Stop and release all the capsules in the scope
 		try {
-			bundleActiveCapsuleScope.foreach(scope -> {
+			foreach(bundleActiveCapsuleScope, scope -> {
 				try {
 					log.debug("Bundle {}: Stopping whenBundleActive of bundle: {}", Util.bundleName(context));
 					scope.stop();
@@ -241,7 +262,7 @@ public class OsgiContext
 							e);
 					throw e;
 				} finally {
-					bundleActiveCapsuleScope = Optional.none();
+					bundleActiveCapsuleScope = filter(bundleActiveCapsuleScope, s -> s == scope);
 				}
 			});
 
