@@ -69,7 +69,7 @@ public class ServiceProviderCapsule<S> implements Capsule {
 		final Hashtable<String, ?> props = new Hashtable<>(properties);
 
 		if (log.isDebugEnabled()) {
-			log.debug("Bundle {}: Register service [${service}] with interfaces [{}} and properties [{}]",
+			log.debug("Bundle {}: Register service [{}] with interfaces [{}} and properties [{}]",
 					Util.bundleName(bundleContext), service, mkString(types, ", "), properties);
 		}
 
