@@ -1,5 +1,5 @@
 = Domino Java - A Java DSL to master OSGi dynamics
-:latest-version: 0.2.0
+:latest-version: 0.3.0
 
 ifdef::env-github[]
 image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
@@ -24,6 +24,17 @@ Maven::
 </dependency>
 ----
 
+Gradle::
+[source,groovy,subs="attributes"]
+implementation 'com.github.domino-osgi:domino-java:{latest-version}'
+
+
+mill::
+[source,scala,subs="attributes"]
+ivy"com.github.domino-osgi:domino-java:{latest-version}"
+
+
+
 == Documentation
 
 * https://domino-osgi.github.io/domino-java/javadoc/current[Javadoc for latest domino-java version]
@@ -32,7 +43,7 @@ Maven::
 
 == Changelog
 
-=== domino-java {master}
+=== domino-java 0.3.0 - 2019-05-13
 
 * Support multipe `OsgiContext.whenBundleActive` calls
 
