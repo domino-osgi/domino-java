@@ -1,6 +1,8 @@
 import java.io.File
 
 import mill._
+import mill.api.Loose
+import mill.define.Target
 import mill.modules.Util
 import mill.scalalib._
 import mill.scalalib.publish._
@@ -31,6 +33,7 @@ object main
     val bndlib = "biz.aQute.bnd:biz.aQute.bndlib:3.5.0"
     // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"
     val logbackClassic = ivy"ch.qos.logback:logback-classic:1.1.3"
+    val junitInterface = ivy"com.novocode:junit-interface:0.11"
   }
 
   override def artifactName = T {
@@ -112,6 +115,20 @@ object main
     "--attribute", s"title-link=${url}[${bundleSymbolicName} ${publishVersion}]",
     "--attribute", "env-asciidoclet=true"
   )
+
+  object test extends Tests {
+    override def ivyDeps = T {
+      super.ivyDeps() ++ Agg(
+        Deps.lambdaTest,
+        Deps.felixConnect,
+        Deps.junitInterface,
+        Deps.junit4,
+        Deps.logbackClassic,
+        Deps.utilsFunctional
+      )
+    }
+    def testFrameworks = Seq("com.novocode.junit.JUnitFramework")
+  }
 
 }
 
