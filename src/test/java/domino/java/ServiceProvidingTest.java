@@ -3,6 +3,7 @@ package domino.java;
 import static de.tobiasroeser.lambdatest.Expect.expectEquals;
 import static de.tobiasroeser.lambdatest.Expect.expectNotEquals;
 import static de.tobiasroeser.lambdatest.Expect.expectTrue;
+import static de.tobiasroeser.lambdatest.Expect.expectNotNull;
 
 import java.util.Map;
 
@@ -86,6 +87,36 @@ public class ServiceProvidingTest extends FreeSpec {
 
 					activator.stop(sr.getBundleContext());
 					expectEquals(sr.getServiceReference(MyService.class.getName()), null);
+
+				});
+			});
+
+			test("Mutltiple whenBundleActive via inheritance", () -> {
+				FelixConnectHelper.withPojoSr(sr -> {
+					class Parent extends OsgiContext {
+						public Parent() {
+							whenBundleActive(bc -> {
+								providesService(exampleService, MyService.class);
+							});
+						}
+					}
+					class Child extends Parent {
+						public Child() {
+							whenBundleActive(bc -> {
+								providesService(exampleService, MyService2.class);
+							});
+						}
+					}
+
+					final Child child = new Child();
+					child.start(sr.getBundleContext());
+					final ServiceReference ref1 = sr.getServiceReference(MyService.class.getName());
+					expectNotNull(ref1);
+
+					final ServiceReference ref2 = sr.getServiceReference(MyService2.class.getName());
+					expectNotNull(ref2);
+
+					expectNotEquals(ref1, ref2);
 
 				});
 			});
