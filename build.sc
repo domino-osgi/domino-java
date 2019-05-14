@@ -19,6 +19,8 @@ object main
   with OsgiBundleModule
   with PublishM2Module {
 
+  override def publishVersion = "0.3.1-SNAPSHOT"
+
   val url = "https://github.com/domino-osgi/domino-java"
 
   object Deps {
@@ -36,10 +38,7 @@ object main
     val junitInterface = ivy"com.novocode:junit-interface:0.11"
   }
 
-  override def artifactName = T {
-    "domino-java"
-  }
-
+  override def artifactName = "domino-java"
   override def bundleSymbolicName = "domino.java"
 
   def osgiHeaders = T {
@@ -57,10 +56,6 @@ object main
   }
 
   override def millSourcePath = super.millSourcePath / os.up
-
-  override def publishVersion = T {
-    "0.3.0-SNAPSHOT"
-  }
 
   override def pomSettings: mill.T[mill.scalalib.publish.PomSettings] = T {
     PomSettings(
