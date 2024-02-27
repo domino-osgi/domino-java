@@ -16,7 +16,7 @@ object Deps {
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
   val utilsFunctional = "de.tototec" % "de.tototec.utils.functional" % "2.0.1"
   // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"
-  val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.3"
+  val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.11"
 }
 
 object Plugins {
