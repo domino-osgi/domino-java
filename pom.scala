@@ -10,7 +10,7 @@ object Deps {
   val bndlib = "biz.aQute.bnd" % "biz.aQute.bndlib" % "3.5.0"
   val felixConnect = "org.apache.felix" % "org.apache.felix.connect" % "0.1.0"
   val junit4 = "junit" % "junit" % "4.12"
-  val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.6.2"
+  val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.8.0"
   val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
   val osgiCore = "org.osgi" % "org.osgi.core" % "5.0.0"
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
