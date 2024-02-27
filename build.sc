@@ -48,8 +48,8 @@ object main
         "*"
       ),
       `Export-Package` = Seq(
-        s"""${bundleSymbolicName()}""",
-        s"""${bundleSymbolicName()}"""
+        s"""domino.java""",
+        s"""domino.java.capsule"""
       )
     )
   }
