@@ -12,7 +12,7 @@ object Deps {
   val junit4 = "junit" % "junit" % "4.12"
   val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.6.2"
   val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
-  val osgiCore = "org.osgi" % "org.osgi.core" % "5.0.0"
+  val osgiCore = "org.osgi" % "org.osgi.core" % "6.0.0"
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.25"
   val utilsFunctional = "de.tototec" % "de.tototec.utils.functional" % "2.0.1"
   // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"

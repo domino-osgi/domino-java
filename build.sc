@@ -24,7 +24,7 @@ object main
 
   object Deps {
     val slf4j = ivy"org.slf4j:slf4j-api:1.7.25"
-    val osgiCore = ivy"org.osgi:org.osgi.core:5.0.0"
+    val osgiCore = ivy"org.osgi:org.osgi.core:6.0.0"
     val osgiCompendium = ivy"org.osgi:org.osgi.compendium:5.0.0"
     val utilsFunctional = ivy"de.tototec:de.tototec.utils.functional:2.0.1"
     val lambdaTest = ivy"de.tototec:de.tobiasroeser.lambdatest:0.6.2"
