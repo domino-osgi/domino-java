@@ -1,3 +1,6 @@
+import $ivy.`de.tototec::de.tobiasroeser.mill.osgi::0.5.0`
+import $ivy.`de.tototec::de.tobiasroeser.mill.vcs.version::0.4.0`
+
 import java.io.File
 
 import mill._
@@ -7,15 +10,15 @@ import mill.modules.Util
 import mill.scalalib._
 import mill.scalalib.publish._
 
-import $ivy.`de.tototec::de.tobiasroeser.mill.osgi::0.5.0`
 import de.tobiasroeser.mill.osgi._
+import de.tobiasroeser.mill.vcs.version.VcsVersion
 
 object main
   extends MavenModule
   with PublishModule
   with OsgiBundleModule {
 
-  override def publishVersion = "0.3.1-SNAPSHOT"
+  override def publishVersion = VcsVersion.vcsState().format()
 
   val url = "https://github.com/domino-osgi/domino-java"
 
@@ -37,16 +40,16 @@ object main
   override def artifactName = "domino-java"
   override def bundleSymbolicName = "domino.java"
 
-  def osgiHeaders = T {
+  override def osgiHeaders = T {
     super.osgiHeaders().copy(
       `Import-Package` = Seq(
-        "org.slf4j.*;resolution:=optional",
+        """org.slf4j.*;version="[1.7,3)";resolution:=optional""",
         "de.tototec.utils.functional.*;resolution:=optional",
         "*"
       ),
       `Export-Package` = Seq(
-        s"""${bundleSymbolicName()};version="0.3.0"""",
-        s"""${bundleSymbolicName()}.capsule;version="0.1.0""""
+        s"""${bundleSymbolicName()}""",
+        s"""${bundleSymbolicName()}"""
       )
     )
   }
@@ -78,15 +81,17 @@ object main
     Dep(Deps.utilsFunctional.dep.withOptional(true), cross = CrossVersion.empty(false), force = false)
   )
 
-  def docletIvyDeps = T {
-    Agg(
-      Deps.asciiDoclet
-    )
-  }
+  override def javacOptions = Seq("-source", "8", "-target", "8", "-encoding", "UTF-8", "-deprecation")
 
-  def docletClasspath = T {
-    resolveDeps(docletIvyDeps)
-  }
+//  def docletIvyDeps = T {
+//    Agg(
+//      Deps.asciiDoclet
+//    )
+//  }
+
+//  def docletClasspath = T {
+//    resolveDeps(docletIvyDeps)
+//  }
 
   override def generatedSources = T {
     val dest = T.ctx().dest
@@ -94,20 +99,20 @@ object main
     Seq(PathRef(dest))
   }
 
-  override def javadocOptions = Seq(
-    "-doclet", "org.asciidoctor.Asciidoclet",
-    "-docletpath", s"${docletClasspath().map(_.path).mkString(File.pathSeparator)}",
-    "-overview", s"${millSourcePath / "README.adoc"}",
-    "--base-dir", s"${millSourcePath}",
-    "--attributes-file", s"${millSourcePath / 'src / 'main / 'doc / "placeholders.adoc"}",
-    "--attribute", s"name=${artifactName}",
-    "--attribute", s"version=${publishVersion}",
-    "--attribute", s"dominojavaversion=${publishVersion}",
-    "--attribute", s"title-link=${url}[${bundleSymbolicName} ${publishVersion}]",
-    "--attribute", "env-asciidoclet=true"
-  )
+//  override def javadocOptions = Seq(
+//    "-doclet", "org.asciidoctor.Asciidoclet",
+//    "-docletpath", s"${docletClasspath().map(_.path).mkString(File.pathSeparator)}",
+//    "-overview", s"${millSourcePath / "README.adoc"}",
+//    "--base-dir", s"${millSourcePath}",
+//    "--attributes-file", s"${millSourcePath / 'src / 'main / 'doc / "placeholders.adoc"}",
+//    "--attribute", s"name=${artifactName}",
+//    "--attribute", s"version=${publishVersion}",
+//    "--attribute", s"dominojavaversion=${publishVersion}",
+//    "--attribute", s"title-link=${url}[${bundleSymbolicName} ${publishVersion}]",
+//    "--attribute", "env-asciidoclet=true"
+//  )
 
-  object test extends Tests {
+  object test extends Tests with TestModule.Junit4 {
     override def ivyDeps = T {
       super.ivyDeps() ++ Agg(
         Deps.lambdaTest,
@@ -118,7 +123,6 @@ object main
         Deps.utilsFunctional
       )
     }
-    def testFrameworks = Seq("com.novocode.junit.JUnitFramework")
   }
 
 }
