@@ -197,7 +197,11 @@ public class OsgiContext
 	private void internalStart() {
 		bundleContext.foreach(bc -> {
 			// Execute the handler if one was defined
-			foreach(bundleActiveHandler, handler -> {
+			final LinkedList<ActiveHandler> copy;
+			synchronized (bundleActiveHandler) {
+				copy = new LinkedList<>(bundleActiveHandler);
+			}
+			foreach(copy, handler -> {
 				if (!handler.isStarted()) {
 					handler.setStarted();
 					log.debug("Bundle {}: Starting whenBundleActive", Util.bundleName(bc));
