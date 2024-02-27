@@ -7,17 +7,13 @@ import mill.modules.Util
 import mill.scalalib._
 import mill.scalalib.publish._
 
-import $ivy.`de.tototec::de.tobiasroeser.mill.osgi:0.0.6`
+import $ivy.`de.tototec::de.tobiasroeser.mill.osgi::0.5.0`
 import de.tobiasroeser.mill.osgi._
-
-import $ivy.`de.tototec::de.tobiasroeser.mill.publishM2:0.1.0`
-import de.tobiasroeser.mill.publishM2._
 
 object main
   extends MavenModule
   with PublishModule
-  with OsgiBundleModule
-  with PublishM2Module {
+  with OsgiBundleModule {
 
   override def publishVersion = "0.3.1-SNAPSHOT"
 
@@ -78,8 +74,8 @@ object main
 
   override def compileIvyDeps = Agg(
     // Deps.slf4j.optional(true)
-    Dep(Deps.slf4j.dep.copy(optional = true), cross = CrossVersion.empty(false), force = false),
-    Dep(Deps.utilsFunctional.dep.copy(optional = true), cross = CrossVersion.empty(false), force = false)
+    Dep(Deps.slf4j.dep.withOptional(true), cross = CrossVersion.empty(false), force = false),
+    Dep(Deps.utilsFunctional.dep.withOptional(true), cross = CrossVersion.empty(false), force = false)
   )
 
   def docletIvyDeps = T {
