@@ -3,7 +3,7 @@ package domino.java.internal;
 /**
  * Use this factory to get an instance of {@link Logger}.
  * 
- * The instance will use SLF4J as underlying logging API, it it can be detected
+ * The instance will use SLF4J as underlying logging API, if it can be detected
  * on the classpath. Else, it will fall back to use Java Util Logging.
  * 
  * The enhanced placeholder syntax of SLF4J is always supported.
