@@ -8,7 +8,7 @@ val url = "https://github.com/domino-osgi/domino-java"
 object Deps {
   val asciiDoclet = "org.asciidoctor" % "asciidoclet" % "1.5.4"
   val bndlib = "biz.aQute.bnd" % "biz.aQute.bndlib" % "3.5.0"
-  val felixConnect = "org.apache.felix" % "org.apache.felix.connect" % "0.1.0"
+  val felixConnect = "org.apache.felix" % "org.apache.felix.connect" % "0.2.0"
   val junit4 = "junit" % "junit" % "4.12"
   val lambdaTest = "de.tototec" % "de.tobiasroeser.lambdatest" % "0.6.2"
   val osgiCompendium = "org.osgi" % "org.osgi.compendium" % "5.0.0"
