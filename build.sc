@@ -83,6 +83,8 @@ object main
 
   override def javacOptions = Seq("-source", "8", "-target", "8", "-encoding", "UTF-8", "-deprecation")
 
+  override def javadocOptions: T[Seq[String]] = super.javadocOptions() ++ Seq("-Xdoclint:none")
+
 //  def docletIvyDeps = T {
 //    Agg(
 //      Deps.asciiDoclet
