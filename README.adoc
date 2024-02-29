@@ -11,7 +11,8 @@ It make most sense with at least Java 8 an it's closures, but on request, I can 
 
 == Download
 
-The latest version is {latest-version} and can be downloaded from http://search.maven.org/#search|ga|1|g%3A%22com.github.domino-osgi%22[Maven Central].
+The latest version is {latest-version} and can be downloaded from 
+https://search.maven.org/artifact/com.github.domino-osgi/domino-java[Maven Central].
 
 Maven::
 [source,xml,subs="attributes,verbatim"]
