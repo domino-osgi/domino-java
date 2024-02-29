@@ -23,18 +23,18 @@ object main
   val url = "https://github.com/domino-osgi/domino-java"
 
   object Deps {
-    val slf4j = ivy"org.slf4j:slf4j-api:1.7.25"
+    val slf4j = ivy"org.slf4j:slf4j-api:1.7.36"
     val osgiCore = ivy"org.osgi:org.osgi.core:5.0.0"
     val osgiCompendium = ivy"org.osgi:org.osgi.compendium:5.0.0"
     val utilsFunctional = ivy"de.tototec:de.tototec.utils.functional:2.3.0"
-    val lambdaTest = ivy"de.tototec:de.tobiasroeser.lambdatest:0.6.2"
+    val lambdaTest = ivy"de.tototec:de.tobiasroeser.lambdatest:0.8.0"
     val junit4 = ivy"junit:junit:4.12"
-    val felixConnect = ivy"org.apache.felix:org.apache.felix.connect:0.1.0"
+    val felixConnect = ivy"org.apache.felix:org.apache.felix.connect:0.2.0"
     val asciiDoclet = ivy"org.asciidoctor:asciidoclet:1.5.4"
     val bndlib = "biz.aQute.bnd:biz.aQute.bndlib:3.5.0"
     // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"
     val logbackClassic = ivy"ch.qos.logback:logback-classic:1.1.3"
-    val junitInterface = ivy"com.novocode:junit-interface:0.11"
+    val junitInterface = ivy"com.github.sbt:junit-interface:0.13.3"
   }
 
   override def artifactName = "domino-java"
