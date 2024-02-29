@@ -1,14 +1,13 @@
 = Domino Java - A Java DSL to master OSGi dynamics
 :latest-version: 0.3.0
+:link-github: https://github.com/domino-osgi/domino-java
 
 ifdef::env-github[]
-image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
 image:https://badges.gitter.im/Join%20Chat.svg["Gitter chat", link="https://gitter.im/domino-osgi/domino-java"]
 endif::[]
 
-This project is in an experimental state.
-It tries to bring the comfort of the proven https://github.com/domino-osgi/domino[Domino Scala DSL] into the Java world.
-It make most sense with Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
+This project tries to bring the comfort of the proven https://github.com/domino-osgi/domino[Domino Scala DSL] into the Java world.
+It make most sense with at least Java 8 an it's closures, but on request, I can try to publish a Java7 (and older) compatible variant.
 
 == Download
 
@@ -24,14 +23,14 @@ Maven::
 </dependency>
 ----
 
+Mill::
+[source,scala,subs="attributes"]
+ivy"com.github.domino-osgi:domino-java:{latest-version}"
+
+
 Gradle::
 [source,groovy,subs="attributes"]
 implementation 'com.github.domino-osgi:domino-java:{latest-version}'
-
-
-mill::
-[source,scala,subs="attributes"]
-ivy"com.github.domino-osgi:domino-java:{latest-version}"
 
 
 
@@ -40,6 +39,16 @@ ivy"com.github.domino-osgi:domino-java:{latest-version}"
 * https://domino-osgi.github.io/domino-java/javadoc/current[Javadoc for latest domino-java version]
 * https://domino-osgi.github.io/domino-java/javadoc/0.1.x/[Javadoc for domino-java 0.1.x]
 * https://gitter.im/domino-osgi/domino-java[Gitter chat]
+
+== Building and Contributing
+
+This project is build with the https://mill-build.com[Mill Build Tool]. 
+If you don't have Mill installed, you can use the `./mill` script in this repository.
+
+Publishing is now automized via GitHub Actions.
+
+If you found a bug please {link-github}/issues[report it].
+You can open a {link-github}/pull[pull request] or discuss and ask questions in the {link-github}/discussions[Discussions].
 
 == Changelog
 
