@@ -15,7 +15,7 @@ object main extends RootModule with JavaModule with PublishModule with OsgiBundl
   val url = "https://github.com/domino-osgi/domino-java"
 
   object Deps {
-    val slf4j = ivy"org.slf4j:slf4j-api:1.7.36"
+    val slf4j = ivy"org.slf4j:slf4j-api:2.0.12"
     val osgiCore = ivy"org.osgi:org.osgi.core:5.0.0"
     val osgiCompendium = ivy"org.osgi:org.osgi.compendium:5.0.0"
     val utilsFunctional = ivy"de.tototec:de.tototec.utils.functional:2.3.0"
