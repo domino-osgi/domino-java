@@ -8,10 +8,7 @@ import mill.scalalib.publish._
 import de.tobiasroeser.mill.osgi._
 import de.tobiasroeser.mill.vcs.version.VcsVersion
 
-object main
-  extends MavenModule
-  with PublishModule
-  with OsgiBundleModule {
+object main extends RootModule with JavaModule with PublishModule with OsgiBundleModule {
 
   override def publishVersion = VcsVersion.vcsState().format()
 
@@ -35,8 +32,9 @@ object main
   override def artifactName = "domino-java"
   override def bundleSymbolicName = "domino.java"
 
-  override def osgiHeaders = T {
-    super.osgiHeaders().copy(
+  override def osgiHeaders = super
+    .osgiHeaders()
+    .copy(
       `Import-Package` = Seq(
         """org.slf4j.*;version="[1.7,3)";resolution:=optional""",
         "de.tototec.utils.functional.*;resolution:=optional",
@@ -47,9 +45,6 @@ object main
         s"""domino.java.capsule"""
       )
     )
-  }
-
-  override def millSourcePath = super.millSourcePath / os.up
 
   override def pomSettings: mill.T[mill.scalalib.publish.PomSettings] = T {
     PomSettings(
@@ -61,7 +56,6 @@ object main
       developers = Seq(
         Developer(id = "lefou", name = "Tobias Roeser", url = "https://github.com/lefou")
       )
-
     )
   }
 
@@ -80,36 +74,13 @@ object main
 
   override def javadocOptions: T[Seq[String]] = super.javadocOptions() ++ Seq("-Xdoclint:none")
 
-//  def docletIvyDeps = T {
-//    Agg(
-//      Deps.asciiDoclet
-//    )
-//  }
-
-//  def docletClasspath = T {
-//    resolveDeps(docletIvyDeps)
-//  }
-
   override def generatedSources = T {
     val dest = T.ctx().dest
     Seq("README.adoc", "LICENSE.txt").foreach(f => os.copy.into(millSourcePath / f, dest))
     Seq(PathRef(dest))
   }
 
-//  override def javadocOptions = Seq(
-//    "-doclet", "org.asciidoctor.Asciidoclet",
-//    "-docletpath", s"${docletClasspath().map(_.path).mkString(File.pathSeparator)}",
-//    "-overview", s"${millSourcePath / "README.adoc"}",
-//    "--base-dir", s"${millSourcePath}",
-//    "--attributes-file", s"${millSourcePath / 'src / 'main / 'doc / "placeholders.adoc"}",
-//    "--attribute", s"name=${artifactName}",
-//    "--attribute", s"version=${publishVersion}",
-//    "--attribute", s"dominojavaversion=${publishVersion}",
-//    "--attribute", s"title-link=${url}[${bundleSymbolicName} ${publishVersion}]",
-//    "--attribute", "env-asciidoclet=true"
-//  )
-
-  object test extends MavenModuleTests with TestModule.Junit4 {
+  object test extends JavaModuleTests with TestModule.Junit4 {
     override def ivyDeps = T {
       super.ivyDeps() ++ Agg(
         Deps.lambdaTest,
@@ -123,4 +94,3 @@ object main
   }
 
 }
-

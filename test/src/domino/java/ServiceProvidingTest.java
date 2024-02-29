@@ -70,7 +70,7 @@ public class ServiceProvidingTest extends FreeSpec {
 						public Activator() {
 							whenBundleActive(bc -> {
 								providesService(exampleService, MyService.class,
-										Util.asMap("prop1", "value1", "prop2", 3));
+									Util.asMap("prop1", "value1", "prop2", 3));
 							});
 						}
 					}
@@ -83,7 +83,7 @@ public class ServiceProvidingTest extends FreeSpec {
 					expectEquals(ref.getProperty("prop2"), 3);
 					expectEquals(sr.getServiceReference(MyService2.class.getName()), null);
 					expectNotEquals(sr.getServiceReferences(MyService.class.getName(), "(&(prop1=value1)(prop2=3))"),
-							null);
+						null);
 
 					activator.stop(sr.getBundleContext());
 					expectEquals(sr.getServiceReference(MyService.class.getName()), null);
