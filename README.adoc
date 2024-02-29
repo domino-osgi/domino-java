@@ -1,5 +1,5 @@
 = Domino Java - A Java DSL to master OSGi dynamics
-:latest-version: 0.3.0
+:latest-version: 0.3.1
 :link-github: https://github.com/domino-osgi/domino-java
 
 ifdef::env-github[]
@@ -51,22 +51,32 @@ You can open a {link-github}/pull[pull request] or discuss and ask questions in 
 
 == Changelog
 
-=== domino-java 0.3.0 - 2019-05-13
+[#0-3-1]
+=== 0.3.1 - 2024-02-29
+
+* Fix a race condition when an `OsgiContext` with multiple (potentially nested) `whenBundleActive` handlers is started
+* Update the project tooling and automated Maven Central publications
+
+[#0-3-0]
+=== 0.3.0 - 2019-05-13
 
 * Support multipe `OsgiContext.whenBundleActive` calls
 
-=== domino-java 0.2.0 - 2018-08-03
+[#0-2-0]
+=== 0.2.0 - 2018-08-03
 
 * Added `ServiceWatching.whenServicePresent` with 4 types
 * Updated major version of dependency de.tototec.utils.functional
 * No longer re-export de.tototec.utils.functional
 
-=== domino-java 0.1.1 - 2018-02-27
+[#0-1-1]
+=== 0.1.1 - 2018-02-27
 
 * Added `OsgiContext.isActive` method
 * Log un-registrations of services
 * Created test suite based on Felix Connect (aka PojoSR)
 
-=== domino-java 0.1.0 - 2018-02-12
+[#0-1-0]
+=== 0.1.0 - 2018-02-12
 
 * Initial Release
