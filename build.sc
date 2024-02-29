@@ -1,12 +1,7 @@
 import $ivy.`de.tototec::de.tobiasroeser.mill.osgi::0.5.0`
 import $ivy.`de.tototec::de.tobiasroeser.mill.vcs.version::0.4.0`
 
-import java.io.File
-
 import mill._
-import mill.api.Loose
-import mill.define.Target
-import mill.modules.Util
 import mill.scalalib._
 import mill.scalalib.publish._
 
@@ -114,7 +109,7 @@ object main
 //    "--attribute", "env-asciidoclet=true"
 //  )
 
-  object test extends Tests with TestModule.Junit4 {
+  object test extends MavenModuleTests with TestModule.Junit4 {
     override def ivyDeps = T {
       super.ivyDeps() ++ Agg(
         Deps.lambdaTest,
