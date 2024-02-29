@@ -36,7 +36,7 @@ implementation 'com.github.domino-osgi:domino-java:{latest-version}'
 
 == Documentation
 
-* https://javadoc.io/doc/com.github.domino-osgi/domino-java/0.3.0/index.html[Javadoc for latest domino-java version]
+* https://javadoc.io/doc/com.github.domino-osgi/domino-java/latest/index.html[Javadoc for latest domino-java version]
 * https://gitter.im/domino-osgi/domino-java[Gitter chat]
 
 == Building and Contributing
