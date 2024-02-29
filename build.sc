@@ -26,7 +26,7 @@ object main
     val slf4j = ivy"org.slf4j:slf4j-api:1.7.36"
     val osgiCore = ivy"org.osgi:org.osgi.core:5.0.0"
     val osgiCompendium = ivy"org.osgi:org.osgi.compendium:5.0.0"
-    val utilsFunctional = ivy"de.tototec:de.tototec.utils.functional:2.0.1"
+    val utilsFunctional = ivy"de.tototec:de.tototec.utils.functional:2.3.0"
     val lambdaTest = ivy"de.tototec:de.tobiasroeser.lambdatest:0.8.0"
     val junit4 = ivy"junit:junit:4.12"
     val felixConnect = ivy"org.apache.felix:org.apache.felix.connect:0.2.0"
