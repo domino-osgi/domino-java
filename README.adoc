@@ -2,13 +2,11 @@
 :latest-version: 0.3.0
 
 ifdef::env-github[]
-image:https://travis-ci.org/domino-osgi/domino-java.svg?branch=master["Travis CI Build Status", link="https://travis-ci.org/domino-osgi/domino-java"]
 image:https://badges.gitter.im/Join%20Chat.svg["Gitter chat", link="https://gitter.im/domino-osgi/domino-java"]
 endif::[]
 
-This project is in an experimental state.
-It tries to bring the comfort of the proven https://github.com/domino-osgi/domino[Domino Scala DSL] into the Java world.
-It make most sense with Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
+This project tries to bring the comfort of the proven https://github.com/domino-osgi/domino[Domino Scala DSL] into the Java world.
+It make most sense with at least Java 8 an it's closures, but on demand, I can try to publish a Java7 (and older) compatible variant.
 
 == Download
 
