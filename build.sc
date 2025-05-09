@@ -8,7 +8,7 @@ import mill.scalalib.publish._
 import de.tobiasroeser.mill.osgi._
 import de.tobiasroeser.mill.vcs.version.VcsVersion
 
-object main extends RootModule with JavaModule with PublishModule with OsgiBundleModule {
+object `package` extends RootModule with JavaModule with PublishModule with OsgiBundleModule {
 
   override def publishVersion = VcsVersion.vcsState().format()
 
@@ -65,9 +65,8 @@ object main extends RootModule with JavaModule with PublishModule with OsgiBundl
   )
 
   override def compileIvyDeps = Agg(
-    // Deps.slf4j.optional(true)
-    Dep(Deps.slf4j.dep.withOptional(true), cross = CrossVersion.empty(false), force = false),
-    Dep(Deps.utilsFunctional.dep.withOptional(true), cross = CrossVersion.empty(false), force = false)
+    Deps.slf4j,
+    Deps.utilsFunctional
   )
 
   override def javacOptions = Seq("-source", "8", "-target", "8", "-encoding", "UTF-8", "-deprecation")
@@ -80,7 +79,7 @@ object main extends RootModule with JavaModule with PublishModule with OsgiBundl
     Seq(PathRef(dest))
   }
 
-  object test extends JavaModuleTests with TestModule.Junit4 {
+  object test extends JavaTests with TestModule.Junit4 {
     override def ivyDeps = T {
       super.ivyDeps() ++ Agg(
         Deps.lambdaTest,
