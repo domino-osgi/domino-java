@@ -33,7 +33,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: temurin
 
-      - run: ./mill __.compile + __.test + __.publishLocal testrepo
+      - run: ./mill __.compile + __.test + __.publishLocal --localIvyRepo testrepo
 
   publish:
     needs: [build]
