@@ -25,7 +25,7 @@ object `package` extends RootModule with JavaModule with PublishModule with Osgi
     val asciiDoclet = ivy"org.asciidoctor:asciidoclet:1.5.4"
     val bndlib = "biz.aQute.bnd:biz.aQute.bndlib:3.5.0"
     // val felixConfigAdmin = "org.apache.felix" % "org.apache.felix.configadmin" % "1.8.8"
-    val logbackClassic = ivy"ch.qos.logback:logback-classic:1.1.11"
+    val logbackClassic = ivy"ch.qos.logback:logback-classic:1.5.25"
     val junitInterface = ivy"com.github.sbt:junit-interface:0.13.3"
   }
 
